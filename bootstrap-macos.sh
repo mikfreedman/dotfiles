@@ -10,11 +10,15 @@ ln -fs "$HOME/dotfiles/zshrc" "$HOME/.zshrc"
 ln -fs "$HOME/dotfiles/zlogin" "$HOME/.zlogin"
 ln -fs "$HOME/dotfiles/zlogout" "$HOME/.zlogout"
 ln -fs "$HOME/dotfiles/zshenv" "$HOME/.zshenv"
+ln -fs "$HOME/dotfiles/fzfrc" "$HOME/.fzfrc"
 
 mkdir -p "$HOME/.zprezto-contrib"
 git clone https://github.com/agkozak/zsh-z.git "$HOME/.zprezto-contrib/zsh-z"
 
-brew install git go zsh cloudfoundry/tap/bosh-cli direnv yarn wget tree tmux tcptraceroute jq
+brew install git go zsh cloudfoundry/tap/bosh-cli direnv yarn wget tree tmux tcptraceroute jq fzf
+
+/opt/homebrew/opt/fzf/install --all --key-bindings --completion --update-rc
+
 git config --global user.email "github@michael-freedman.com"
 git config --global user.name "Mik Freedman"
 git config --global pull.rebase true

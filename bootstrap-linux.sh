@@ -6,18 +6,17 @@ sudo apt-get --assume-yes install tmux git zsh silversearcher-ag net-tools unatt
 sudo apt-get update
 
 chsh -s /usr/bin/zsh $USER
-git clone https://github.com/mikfreedman/dotfiles.git
-export GOVERSION="1.11.2"
-if [[ "$OSTYPE" == darwin* ]]; then
-  wget -O go.tar.gz "https://storage.googleapis.com/golang/go$GOVERSION.darwin-amd64.tar.gz"
-else
-  wget -O go.tar.gz "https://storage.googleapis.com/golang/go$GOVERSION.linux-amd64.tar.gz"
-fi
-sudo rm -rf /usr/local/go
-sudo mkdir -p /usr/local/go
-sudo chown $USER:$USER /usr/local/go
-tar -C /usr/local -xzf go.tar.gz
-rm -rf go.tar.gz
+# export GOVERSION="1.11.2"
+# if [[ "$OSTYPE" == darwin* ]]; then
+#   wget -O go.tar.gz "https://storage.googleapis.com/golang/go$GOVERSION.darwin-amd64.tar.gz"
+# else
+#   wget -O go.tar.gz "https://storage.googleapis.com/golang/go$GOVERSION.linux-amd64.tar.gz"
+# fi
+# sudo rm -rf /usr/local/go
+# sudo mkdir -p /usr/local/go
+# sudo chown $USER:$USER /usr/local/go
+# tar -C /usr/local -xzf go.tar.gz
+# rm -rf go.tar.gz
 rm -rf ~/.zprezto
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
 ln -fs "$HOME/dotfiles/zpreztorc-linux" "$HOME/.zpreztorc"

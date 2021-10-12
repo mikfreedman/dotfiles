@@ -27,7 +27,6 @@ bindkey '^[[A' history-substring-search-up
 
 # Customize to your needs...
 # Add homebrew to the completion path
-fpath=("/usr/local/bin/" $fpath)
 
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
@@ -125,9 +124,12 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(direnv hook zsh)"
 
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-
 bindkey -e
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzfrc ] && source ~/.fzfrc
+
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+
+path+=$HOME/.local/bin

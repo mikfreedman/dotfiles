@@ -5,6 +5,15 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+if [[ -f "$HOME/.iterm2/it2check" ]]; then
+	$HOME/.iterm2/it2check
+	if [ $? -eq 0 ]; then
+		export TERM_PROGRAM='iTerm.app'
+	else
+	fi
+fi
+
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"

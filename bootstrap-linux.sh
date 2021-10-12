@@ -27,6 +27,6 @@ ln -fs "$HOME/dotfiles/zlogin" "$HOME/.zlogin"
 ln -fs "$HOME/dotfiles/zlogout" "$HOME/.zlogout"
 ln -fs "$HOME/dotfiles/zshenv" "$HOME/.zshenv"
 mkdir -p "$HOME/go"
-git config --global user.email "github@michael-freedman.compopt"
+git config --global user.email "github@michael-freedman.com"
 git config --global user.name "Mik Freedman"
 git config --global pull.rebase true

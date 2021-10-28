@@ -2,7 +2,7 @@
 
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get --assume-yes install tmux git zsh silversearcher-ag net-tools unattended-upgrades software-properties-common fzf
+sudo apt-get --assume-yes install tmux git zsh silversearcher-ag net-tools unattended-upgrades software-properties-common fzf direnv
 sudo apt-get update
 
 chsh -s /usr/bin/zsh $USER

@@ -17,7 +17,11 @@ chsh -s /usr/bin/zsh $USER
 # sudo chown $USER:$USER /usr/local/go
 # tar -C /usr/local -xzf go.tar.gz
 # rm -rf go.tar.gz
+mkdir -p "$HOME/.zprezto-contrib"
+git clone https://github.com/agkozak/zsh-z.git "$HOME/.zprezto-contrib/zsh-z"
+
 rm -rf ~/.zprezto
+
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
 ln -fs "$HOME/dotfiles/zpreztorc-linux" "$HOME/.zpreztorc"
 ln -fs "$HOME/dotfiles/zprofile" "$HOME/.zprofile"

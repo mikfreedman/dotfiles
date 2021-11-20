@@ -76,7 +76,7 @@ setopt NO_HUP
 setopt NO_FLOW_CONTROL
 
 # Keep echo "station" > station from clobbering station
-setopt NO_CLOBBER
+setopt CLOBBER
 
 # Case insensitive globbing
 setopt NO_CASE_GLOB
@@ -138,7 +138,18 @@ bindkey -e
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzfrc ] && source ~/.fzfrc
 
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+test -e /usr/share/doc/fzf/examples/key-bindings.zsh && source /usr/share/doc/fzf/examples/key-bindings.zsh
+test -e /usr/share/doc/fzf/examples/completion.zsh && source /usr/share/doc/fzf/examples/completion.zsh
 
 path+=$HOME/.local/bin
+
+unsetopt extendedglob
+
+setopt rmstarsilent
+
+alias cp='nocorrect cp'
+alias ln='nocorrect ln'
+alias mv='nocorrect mv'
+alias rm='nocorrect rm'
+
+export GOPRIVATE=*.eng.vmware.com

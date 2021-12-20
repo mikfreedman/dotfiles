@@ -17,7 +17,7 @@ git clone https://github.com/agkozak/zsh-z.git "$HOME/.zprezto-contrib/zsh-z"
 
 brew install git go zsh direnv yarn wget tree tmux tcptraceroute jq fzf fd
 
-/opt/homebrew/opt/fzf/install --all --key-bindings --completion --update-rc
+/usr/local/opt/fzf/install --all --key-bindings --completion --update-rc
 
 git config --global user.email "github@michael-freedman.com"
 git config --global user.name "Mik Freedman"

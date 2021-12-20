@@ -15,7 +15,7 @@ ln -fs "$HOME/dotfiles/fzfrc" "$HOME/.fzfrc"
 mkdir -p "$HOME/.zprezto-contrib"
 git clone https://github.com/agkozak/zsh-z.git "$HOME/.zprezto-contrib/zsh-z"
 
-brew install git go zsh cloudfoundry/tap/bosh-cli direnv yarn wget tree tmux tcptraceroute jq fzf fd
+brew install git go zsh direnv yarn wget tree tmux tcptraceroute jq fzf fd
 
 /opt/homebrew/opt/fzf/install --all --key-bindings --completion --update-rc
 

@@ -153,3 +153,4 @@ alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
 export GOPRIVATE=*.eng.vmware.com
+alias cat='bat'

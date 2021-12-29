@@ -149,6 +149,7 @@ eval "$(rbenv init -)"
 path+=$HOME/.local/bin
 
 unsetopt extendedglob
+setopt NO_NOMATCH
 
 setopt localoptions rmstarsilent
 

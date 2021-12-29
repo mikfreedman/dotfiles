@@ -150,7 +150,7 @@ path+=$HOME/.local/bin
 
 unsetopt extendedglob
 
-setopt rmstarsilent
+setopt localoptions rmstarsilent
 
 alias cp='nocorrect cp'
 alias ln='nocorrect ln'

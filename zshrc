@@ -133,6 +133,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(direnv hook zsh)"
 
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC
+
 bindkey -e
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -140,6 +143,8 @@ bindkey -e
 
 test -e /usr/share/doc/fzf/examples/key-bindings.zsh && source /usr/share/doc/fzf/examples/key-bindings.zsh
 test -e /usr/share/doc/fzf/examples/completion.zsh && source /usr/share/doc/fzf/examples/completion.zsh
+
+eval "$(rbenv init -)"
 
 path+=$HOME/.local/bin
 

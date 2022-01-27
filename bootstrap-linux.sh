@@ -2,8 +2,12 @@
 
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get --assume-yes install tmux git zsh silversearcher-ag net-tools unattended-upgrades software-properties-common fzf direnv jq
+sudo apt-get --assume-yes install tmux git zsh silversearcher-ag net-tools unattended-upgrades software-properties-common fzf direnv jq bat
 sudo apt-get update
+
+# make bat work
+mkdir -p ~/.local/bin
+ln -s /usr/bin/batcat ~/.local/bin/bat
 
 chsh -s /usr/bin/zsh $USER
 # export GOVERSION="1.11.2"

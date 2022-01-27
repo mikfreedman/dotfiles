@@ -1,0 +1,51 @@
+[core]
+  editor = /usr/local/bin/vim
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[transfer]
+  fsckobjects = true
+[alias]
+  gst = git
+  st = status
+  di = diff
+  co = checkout
+  ci = commit
+  cp = cherry-pick
+  br = branch
+  sta = stash
+  llog = log --date=local
+  flog = log --pretty=fuller --decorate
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lol = log --graph --decorate --oneline
+  lola = log --graph --decorate --oneline --all
+  blog = log origin/master... --left-right
+  ds = diff --staged
+  fixup = commit --fixup
+  squash = commit --squash
+  amendit = commit --amend --no-edit
+  unstage = reset HEAD
+  rum = rebase master@{u}
+  gst = git
+  unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
+  unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
+  w = whatchanged
+[format]
+  pretty = format:"%h %C(yellow)%ci%Creset %Cgreen%an%Creset | %s"
+[user]
+  name = Mik Freedman
+  email = github@michael-freedman.com
+[pull]
+  rebase = true
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[url "git@github.com"]
+  insteadOf = https://github.com
+[delta]
+  features = hoopoe side-by-side
+  whitespace-error-style = 22 reverse
+  side-by-side = true
+[init]
+  defaultBranch = main

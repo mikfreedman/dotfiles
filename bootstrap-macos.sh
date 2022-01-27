@@ -11,6 +11,7 @@ ln -fs "$HOME/dotfiles/zlogin" "$HOME/.zlogin"
 ln -fs "$HOME/dotfiles/zlogout" "$HOME/.zlogout"
 ln -fs "$HOME/dotfiles/zshenv" "$HOME/.zshenv"
 ln -fs "$HOME/dotfiles/fzfrc" "$HOME/.fzfrc"
+ln -fs "$HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
 
 mkdir -p "$HOME/.zprezto-contrib"
 git clone https://github.com/agkozak/zsh-z.git "$HOME/.zprezto-contrib/zsh-z"

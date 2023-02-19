@@ -37,12 +37,6 @@
   email = github@michael-freedman.com
 [pull]
   rebase = true
-[url "ssh://git@github.com/"]
-  insteadOf = https://github.com/
-[url "git@github.com:"]
-  insteadOf = https://github.com/
-[url "git@github.com"]
-  insteadOf = https://github.com
 [delta]
   features = hoopoe side-by-side
   whitespace-error-style = 22 reverse

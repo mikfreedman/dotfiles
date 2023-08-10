@@ -67,3 +67,5 @@ fi
 #
 
 TMPPREFIX="$(mktemp -d)/zsh"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"

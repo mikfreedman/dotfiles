@@ -33,10 +33,10 @@
 [format]
   pretty = format:"%h %C(yellow)%ci%Creset %Cgreen%an%Creset | %s"
 [user]
-  name = Mik Freedman
-  email = github@michael-freedman.com
+	name = Mik Freedman
+	email = github@michael-freedman.com
 [pull]
-  rebase = true
+	rebase = true
 [delta]
   features = hoopoe side-by-side
   whitespace-error-style = 22 reverse

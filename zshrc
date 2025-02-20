@@ -161,6 +161,10 @@ alias rm='nocorrect rm'
 export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'
 
-eval "$(fzf --zsh)"
+if [ -x fzf ]; then
+  eval "$(fzf --zsh)"
+fi
 
-
+if [ -f ~/.zshrc.local ]; then
+  source ~/.zshrc.local
+fi

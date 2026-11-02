@@ -16,7 +16,9 @@ ln -fs "$HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
 mkdir -p "$HOME/.zprezto-contrib"
 git clone https://github.com/agkozak/zsh-z.git "$HOME/.zprezto-contrib/zsh-z"
 
-brew install git go zsh direnv yarn wget tree tmux tcptraceroute jq fzf fd bat git-delta
+brew install git go zsh direnv yarn wget tree tmux tcptraceroute jq fzf fd bat git-delta claude bat
+
+brew install --cask firefox chrome macvim docker-desktop hammerspoon alfred flycut rectangle iterm2 visual-studio-code
 
 git config --global user.email "github@michael-freedman.com"
 git config --global user.name "Mik Freedman"

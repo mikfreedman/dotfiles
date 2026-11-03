@@ -69,6 +69,27 @@ fi
 export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'
 
+# atuin: Ctrl-R searches history in a full-screen picker (overrides fzf's Ctrl-R).
+# Up/down stay on Prezto's history-substring-search; `?` stays a normal key.
+if (( $+commands[atuin] )); then
+  eval "$(atuin init zsh --disable-up-arrow --disable-ai)"
+fi
+
+# eza for ls, with git status in long listings. Same alias names as Prezto's.
+if (( $+commands[eza] )); then
+  if [[ -n "$NVIM_NO_NERD_FONT" ]]; then
+    alias ls='eza --group-directories-first'
+  else
+    alias ls='eza --group-directories-first --icons=auto'
+  fi
+  alias l='ls -1a'          # one column, hidden files
+  alias ll='ls -l --git'    # long, with git status
+  alias la='ll -a'          # long, hidden files
+  alias lr='ll --tree'      # long, recursive
+  alias lt='ll -s modified' # long, most recently modified last
+  alias tree='ls --tree'
+fi
+
 # zoxide: `z foo` jumps to the most-used dir matching foo, `zi` picks with fzf
 if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh)"

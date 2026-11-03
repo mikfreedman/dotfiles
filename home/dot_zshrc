@@ -171,6 +171,11 @@ if command -v nvim >/dev/null; then
   export EDITOR=nvim VISUAL=nvim
 fi
 
+# Use Neovide as the GUI vim
+if command -v neovide >/dev/null; then
+  alias mvim=neovide
+fi
+
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
 fi

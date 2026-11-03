@@ -1,0 +1,20 @@
+{{- /* Vim plugins, pinned to the commits in .chezmoidata/vim_plugins.yaml */ -}}
+{{ range .vim_plugins }}
+[".vim/pack/dotfiles/start/{{ .name }}"]
+  type = "archive"
+  url = "https://github.com/{{ .repo }}/archive/{{ .commit }}.tar.gz"
+  stripComponents = 1
+{{ end }}
+[".zprezto"]
+  type = "git-repo"
+  url = "https://github.com/sorin-ionescu/prezto.git"
+  refreshPeriod = "168h"
+  [".zprezto".clone]
+    args = ["--recursive"]
+  [".zprezto".pull]
+    args = ["--recurse-submodules"]
+
+[".zprezto-contrib/zsh-z"]
+  type = "git-repo"
+  url = "https://github.com/agkozak/zsh-z.git"
+  refreshPeriod = "168h"

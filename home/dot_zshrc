@@ -70,18 +70,22 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(direnv hook zsh)"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.fzfrc ] && source ~/.fzfrc
-
-test -e /usr/share/doc/fzf/examples/key-bindings.zsh && source /usr/share/doc/fzf/examples/key-bindings.zsh
-test -e /usr/share/doc/fzf/examples/completion.zsh && source /usr/share/doc/fzf/examples/completion.zsh
+# fzf: Ctrl-T files, Alt-C cd, ** completion. `fzf --zsh` needs fzf 0.48+;
+# older distro packages ship the same scripts under /usr/share/doc.
+if (( $+commands[fzf] )); then
+  [[ -f ~/.fzfrc ]] && source ~/.fzfrc
+  if fzf_init="$(fzf --zsh 2>/dev/null)"; then
+    eval "$fzf_init"
+  else
+    for f in /usr/share/doc/fzf/examples/{key-bindings,completion}.zsh; do
+      [[ -f $f ]] && source $f
+    done
+  fi
+  unset fzf_init f
+fi
 
 export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'
-
-if [ -x fzf ]; then
-  eval "$(fzf --zsh)"
-fi
 
 # Use Neovim as vim when it's installed (servers without it keep plain Vim).
 # EDITOR/VISUAL are set in .zprofile.

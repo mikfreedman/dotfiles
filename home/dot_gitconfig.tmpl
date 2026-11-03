@@ -42,6 +42,25 @@
 	email = {{ .email }}
 [pull]
 	rebase = true
+[push]
+  autoSetupRemote = true  # first push of a new branch sets its upstream
+[fetch]
+  prune = true            # forget remote branches that were deleted
+[rebase]
+  autoStash = true        # stash/unstash around rebase and pull
+  autoSquash = true       # apply fixup!/squash! commits (see the fixup/squash aliases)
+  updateRefs = true       # move stacked branches along with a rebase
+[rerere]
+  enabled = true          # reuse recorded conflict resolutions
+[diff]
+  algorithm = histogram
+[merge]
+  # zdiff3 needs git 2.35+; servers may have an older distro git
+  conflictStyle = {{ if .server }}diff3{{ else }}zdiff3{{ end }}
+[branch]
+  sort = -committerdate   # git branch: most recent first
+[tag]
+  sort = version:refname  # v1.10 after v1.9
 {{- if not .server }}
 [delta]
   whitespace-error-style = 22 reverse

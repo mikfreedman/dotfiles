@@ -76,8 +76,6 @@ eval "$(direnv hook zsh)"
 test -e /usr/share/doc/fzf/examples/key-bindings.zsh && source /usr/share/doc/fzf/examples/key-bindings.zsh
 test -e /usr/share/doc/fzf/examples/completion.zsh && source /usr/share/doc/fzf/examples/completion.zsh
 
-path+=$HOME/.local/bin
-
 export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'
 
@@ -85,14 +83,14 @@ if [ -x fzf ]; then
   eval "$(fzf --zsh)"
 fi
 
-# Use Neovim as vim when it's installed (servers without it keep plain Vim)
-if command -v nvim >/dev/null; then
+# Use Neovim as vim when it's installed (servers without it keep plain Vim).
+# EDITOR/VISUAL are set in .zprofile.
+if (( $+commands[nvim] )); then
   alias vim=nvim vi=nvim vimdiff='nvim -d'
-  export EDITOR=nvim VISUAL=nvim
 fi
 
 # Use Neovide as the GUI vim
-if command -v neovide >/dev/null; then
+if (( $+commands[neovide] )); then
   alias mvim=neovide
 fi
 

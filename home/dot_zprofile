@@ -1,6 +1,6 @@
-# The following lines were added by Docker Desktop to add commands to your PATH.
-export PATH="$PATH:{{ .chezmoi.homeDir }}/.docker/bin"
-# End of Docker Desktop section.
+#
+# Executes commands at login pre-zshrc.
+#
 
 #
 # Browser
@@ -9,14 +9,6 @@ export PATH="$PATH:{{ .chezmoi.homeDir }}/.docker/bin"
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
-
-#
-# Editors
-#
-
-export EDITOR='nano'
-export VISUAL='vim'
-export PAGER='less'
 
 #
 # Language
@@ -30,26 +22,33 @@ fi
 # Paths
 #
 
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
-# Set the list of directories that Zsh searches for programs.
+# Go uses ~/go by default; its bin dir isn't on PATH unless we add it.
 path=(
-  $gopath/bin
-  /usr/local/opt/curl/bin
-  /usr/local/{bin,sbin}
-  /usr/local/go/bin
-  /usr/local/opt/gettext/bin
-  /usr/local/opt/bison/bin
+  $HOME/.local/bin
+  $HOME/go/bin
+  /usr/local/go/bin  # Go's official Linux tarball
   $path
+  $HOME/.docker/bin  # Docker Desktop CLI tools
 )
+
+#
+# Editors
+#
+
+if (( $+commands[nvim] )); then
+  export EDITOR='nvim'
+else
+  export EDITOR='vim'
+fi
+export VISUAL="$EDITOR"
+export PAGER='less'
 
 #
 # Less
@@ -70,8 +69,5 @@ fi
 # Temporary Files
 #
 
-TMPPREFIX="$(mktemp -d)/zsh"
-
-if command -v /opt/homebrew/bin/brew &>/dev/null; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+# Prefix for zsh's own temp files (here-docs etc.). TMPDIR is per-user on macOS.
+TMPPREFIX="${${TMPDIR:-/tmp}%/}/zsh"

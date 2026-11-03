@@ -29,7 +29,7 @@ you already have instead, run `chezmoi init --apply --source <path-to-checkout>`
 
 | Source | Result |
 |---|---|
-| `dot_zshrc`, `dot_zprofile.tmpl`, `dot_zshenv`, `dot_zlogin`, `dot_zlogout`, `dot_zpreztorc.tmpl` | zsh + [Prezto](https://github.com/sorin-ionescu/prezto) (macOS/Linux differences are templated) |
+| `dot_zshrc`, `dot_zprofile`, `dot_zshenv`, `dot_zlogin`, `dot_zlogout`, `dot_zpreztorc.tmpl` | zsh + [Prezto](https://github.com/sorin-ionescu/prezto) (macOS/Linux differences are templated) |
 | `dot_gitconfig.tmpl`, `dot_fzfrc` | git (name/email from your answers), fzf |
 | `dot_vimrc`, `dot_gvimrc`, `dot_vim/`, `dot_config/nvim/` | Vim and Neovim, see [docs/vim.md](docs/vim.md) |
 | `.chezmoiexternal.toml.tmpl` | Prezto, zsh-z, and the Vim plugins (pinned to commits) |

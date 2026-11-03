@@ -22,9 +22,10 @@ plugins). Answer "yes" to the *server* prompt on a box that should get Vim only 
 no GUI config). On Linux, Neovim and the tree-sitter CLI are pinned releases in `~/.local`
 (distro packages are too old); make sure `~/.local/bin` is on your `PATH`.
 
-Language toolchains aren't installed for you: language servers come from
-[mason](https://github.com/mason-org/mason.nvim) and need `node`/`npm` (TypeScript, YAML,
-JSON, Bash, prettier) and `go` (gopls, goimports). `rustfmt` comes from `rustup`.
+Language servers come from [mason](https://github.com/mason-org/mason.nvim), which needs
+`node`/`npm` (TypeScript, ESLint, YAML, JSON, Bash, prettier) and `go` (gopls, goimports).
+On macOS both come from Homebrew; on Linux install them yourself (the distro `nodejs` is
+usually too old). `rustfmt` comes from `rustup`.
 
 The first time you open `nvim` it installs the Tree-sitter parsers and language servers in
 the background; give it a minute, then run `:checkhealth`.

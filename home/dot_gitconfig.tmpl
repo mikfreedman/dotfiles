@@ -47,9 +47,8 @@
 {{- end }}
 [init]
   defaultBranch = main
-{{- if not .server }}
+{{- if and (not .server) (eq .chezmoi.os "darwin") }}
 [credential]
-	helper = manager
-	helper = 
+	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager
 {{- end }}

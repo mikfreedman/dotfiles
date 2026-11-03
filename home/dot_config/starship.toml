@@ -1,0 +1,41 @@
+# Starship prompt (https://starship.rs/config/). Same layout as the old spaceship config:
+#   12:34:56 user ~/full/path at host on main [!?] took 3s
+#   ✦ ✘1 ❯
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = """
+$time\
+$username\
+$directory\
+$hostname\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$jobs\
+$status\
+$character"""
+
+[time]
+disabled = false
+format = "[$time]($style) "
+
+[username]
+format = "[$user]($style) "
+
+# Show the whole path, not just the last few dirs or the path from the repo root
+[directory]
+truncation_length = 0
+truncate_to_repo = false
+
+[hostname]
+format = "at [$hostname]($style) "
+
+# No branch icon
+[git_branch]
+symbol = ""
+
+[status]
+disabled = false
+symbol = "✘"

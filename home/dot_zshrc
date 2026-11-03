@@ -49,25 +49,6 @@ bindkey '\e[4~' end-of-line
 # F1 shows help for the command being typed
 bindkey "\eOP" run-help
 
-SPACESHIP_GIT_SYMBOL=""
-SPACESHIP_GIT_BRANCH_PREFIX=""
-
-SPACESHIP_PROMPT_ORDER=(
-  time          # Time stampts section
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  exec_time     # Execution time
-  line_sep      # Line break
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
-  char          # Prompt character
-)
-
-SPACESHIP_DIR_TRUNC="0"
-SPACESHIP_DIR_TRUNC_REPO="false"
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 eval "$(direnv hook zsh)"
 
@@ -91,6 +72,13 @@ alias cat='bat'
 # zoxide: `z foo` jumps to the most-used dir matching foo, `zi` picks with fzf
 if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh)"
+fi
+
+# Prompt: starship (~/.config/starship.toml), or a plain one if it isn't installed
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+else
+  PROMPT='%n@%m %~ %# '
 fi
 
 # Use Neovim as vim when it's installed (servers without it keep plain Vim).

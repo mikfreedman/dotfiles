@@ -1,25 +1,20 @@
 #
 # Executes commands at the start of an interactive session.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 if [[ -f "$HOME/.iterm2/it2check" ]]; then
 	$HOME/.iterm2/it2check
 	if [ $? -eq 0 ]; then
 		export TERM_PROGRAM='iTerm.app'
-	else
 	fi
 fi
 
-
-# Source Prezto.
+# Source Prezto. It sets the Emacs keymap, up/down history-substring search, and
+# the AUTO_CD/AUTO_PUSHD/MULTIOS/NO_CLOBBER/NO_FLOW_CONTROL/NO_HUP family of options.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
 # OSX
 alias fixow='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user;killall Finder;echo "Open With has been rebuilt, Finder will relaunch"'
 # tmux
@@ -30,85 +25,27 @@ alias tml='tmux list-sessions'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-bindkey -v
-bindkey '^[[B' history-substring-search-down
-bindkey '^[[A' history-substring-search-up
+#
+# Options on top of Prezto's
+#
 
-# Customize to your needs...
-# Add homebrew to the completion path
+setopt AUTO_NAME_DIRS     # Use named dirs (~foo) in prompts when possible
+setopt GLOB_COMPLETE      # Complete globs as a menu instead of expanding them
+setopt PUSHD_MINUS        # cd -1 is the most recent dir, not the oldest
+setopt CLOBBER            # Let > overwrite existing files (Prezto turns this off)
+setopt NO_CASE_GLOB       # Case-insensitive globbing
+setopt NUMERIC_GLOB_SORT  # Sort file2 before file10
+setopt RC_EXPAND_PARAM    # foo${arr}bar applies foo/bar to every element
+setopt NO_EXTENDED_GLOB   # Treat #, ~ and ^ literally (Prezto turns this on)
+setopt NO_NOMATCH         # Pass unmatched globs through unchanged
+setopt RM_STAR_SILENT     # Don't ask before rm *
 
-# why would you type 'cd dir' if you could just type 'dir'?
-setopt AUTO_CD
-
-# Now we can pipe to multiple outputs!
-setopt MULTIOS
-
-# This makes cd=pushd
-setopt AUTO_PUSHD
-
-# This will use named dirs when possible
-setopt AUTO_NAME_DIRS
-
-# If we have a glob this will expand it
-setopt GLOB_COMPLETE
-setopt PUSHD_MINUS
-
-# No more annoying pushd messages...
-# setopt PUSHD_SILENT
-
-# blank pushd goes to home
-setopt PUSHD_TO_HOME
-
-# this will ignore multiple directories for the stack.  Useful?  I dunno.
-setopt PUSHD_IGNORE_DUPS
-
-# 10 second wait if you do something that will delete everything.  I wish I'd had this before...
-setopt RM_STAR_WAIT
-
-# use magic (this is default, but it can't hurt!)
-setopt ZLE
-
-setopt NO_HUP
-
-#setopt IGNORE_EOF
-
-# If I could disable Ctrl-s completely I would!
-setopt NO_FLOW_CONTROL
-
-# Keep echo "station" > station from clobbering station
-setopt CLOBBER
-
-# Case insensitive globbing
-setopt NO_CASE_GLOB
-
-# Be Reasonable!
-setopt NUMERIC_GLOB_SORT
-
-# I don't know why I never set this before.
-setopt EXTENDED_GLOB
-
-# hows about arrays be awesome?  (that is, frew${cool}frew has frew surrounding all the variables, not just first and last
-setopt RC_EXPAND_PARAM
-
-# Who doesn't want home and end to work?
+# Home/End in terminals that send these sequences
 bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
 
-# # Incremental search is elite!
-# bindkey -M vicmd "/" history-incremental-search-backward
-# bindkey -M vicmd "?" history-incremental-search-forward
-
-# Search based on what you typed in already
-# bindkey -M vicmd "//" history-beginning-search-backward
-# bindkey -M vicmd "??" history-beginning-search-forward
-
+# F1 shows help for the command being typed
 bindkey "\eOP" run-help
-
-# oh wow!  This is killer...  try it!
-# bindkey -M vicmd "q" push-line
-
-# it's like, space AND completion.  Gnarlbot.
-# bindkey -M viins ' ' magic-space
 
 SPACESHIP_GIT_SYMBOL=""
 SPACESHIP_GIT_BRANCH_PREFIX=""
@@ -133,27 +70,13 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(direnv hook zsh)"
 
-
-bindkey -e
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzfrc ] && source ~/.fzfrc
 
 test -e /usr/share/doc/fzf/examples/key-bindings.zsh && source /usr/share/doc/fzf/examples/key-bindings.zsh
 test -e /usr/share/doc/fzf/examples/completion.zsh && source /usr/share/doc/fzf/examples/completion.zsh
 
-
 path+=$HOME/.local/bin
-
-unsetopt extendedglob
-setopt NO_NOMATCH
-
-setopt localoptions rmstarsilent
-
-alias cp='nocorrect cp'
-alias ln='nocorrect ln'
-alias mv='nocorrect mv'
-alias rm='nocorrect rm'
 
 export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'

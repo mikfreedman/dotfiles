@@ -12,6 +12,8 @@
   st = status
   di = diff
   co = checkout
+  sw = switch
+  rs = restore
   ci = commit
   cp = cherry-pick
   br = branch
@@ -21,17 +23,18 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lol = log --graph --decorate --oneline
   lola = log --graph --decorate --oneline --all
-  blog = log origin/master... --left-right
+  blog = "!git log \"$(git trunk)\"... --left-right"
   ds = diff --staged
   fixup = commit --fixup
   squash = commit --squash
   amendit = commit --amend --no-edit
   unstage = reset HEAD
-  rum = rebase master@{u}
-  gst = git
-  unpushed = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git log origin/$PROJ_BRANCH..HEAD"
-  unpulled = !"PROJ_BRANCH=$(git symbolic-ref HEAD | sed 's|refs/heads/||') && git fetch && git log HEAD..origin/$PROJ_BRANCH"
-  w = whatchanged
+  rum = "!git rebase \"$(git trunk)\""
+  # origin's default branch: origin/HEAD if set (clones set it), else origin/main or origin/master
+  trunk = "!f() { git symbolic-ref -q --short refs/remotes/origin/HEAD || { git rev-parse -q --verify origin/main >/dev/null && echo origin/main; } || echo origin/master; }; f"
+  unpushed = log @{u}..
+  unpulled = !git fetch && git log ..@{u}
+  w = log --raw --no-merges
 [format]
   pretty = format:"%h %C(yellow)%ci%Creset %Cgreen%an%Creset | %s"
 [user]
@@ -41,7 +44,6 @@
 	rebase = true
 {{- if not .server }}
 [delta]
-  features = hoopoe side-by-side
   whitespace-error-style = 22 reverse
   side-by-side = true
 {{- end }}

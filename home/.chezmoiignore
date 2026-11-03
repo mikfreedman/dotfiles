@@ -1,0 +1,4 @@
+{{ if .server }}
+.config/nvim
+.gvimrc
+{{ end }}

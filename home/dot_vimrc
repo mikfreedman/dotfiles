@@ -1,0 +1,31 @@
+" ----------
+" Vim Config
+" ----------
+"
+" How this works:
+"
+" Options and keybindings shared with Neovim live in ~/.vim/core.vim. This file
+" adds the plain-Vim fallbacks and loads the plugins chezmoi installs into
+" ~/.vim/pack/dotfiles/start (see .chezmoidata/vim_plugins.yaml).
+"
+" Neovim does not read this file; it starts from ~/.config/nvim/init.lua.
+
+let s:dir = expand('~/.vim')
+
+execute 'source ' . fnameescape(s:dir . '/core.vim')
+execute 'source ' . fnameescape(s:dir . '/fallback.vim')
+
+" Load pack/*/start plugins now so the colorscheme is available.
+packloadall
+
+set background=dark
+try
+  colorscheme base16-railscasts
+catch /^Vim\%((\a\+)\)\=:E185/
+  silent! colorscheme habamax     " Built-in fallback until plugins are installed
+endtry
+
+
+" Machine-local vim settings - keep this at the end
+" --------------------------
+silent! source ~/.vimrc.local

@@ -9,18 +9,21 @@ macOS:
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install chezmoi
-chezmoi init --apply git@github.com:mikfreedman/dotfiles.git
+chezmoi init --apply <repo-url>
 ```
 
 Linux (apt-based; the setup scripts use apt, so Homebrew isn't needed):
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:mikfreedman/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <repo-url>
 ```
 
 You're asked three questions once per machine: git name, git email, and whether this is a
 **server** (Vim only: no Neovim, GUI apps, delta or Neovim/Neovide config). After that,
 `chezmoi apply` brings a machine up to date and is safe to re-run.
+
+`<repo-url>` is wherever this repo is hosted: any URL `git clone` accepts. To use a checkout
+you already have instead, run `chezmoi init --apply --source <path-to-checkout>`.
 
 ## What's in it
 

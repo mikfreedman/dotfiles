@@ -29,7 +29,7 @@ you already have instead, run `chezmoi init --apply --source <path-to-checkout>`
 
 | Source | Result |
 |---|---|
-| `dot_zshrc`, `dot_zprofile`, `dot_zshenv`, `dot_zlogin`, `dot_zlogout`, `dot_zpreztorc.tmpl` | zsh + [Prezto](https://github.com/sorin-ionescu/prezto) (macOS/Linux differences are templated) |
+| `dot_zshrc`, `dot_zprofile`, `dot_zshenv`, `dot_zlogin`, `dot_zpreztorc.tmpl` | zsh + [Prezto](https://github.com/sorin-ionescu/prezto) (macOS/Linux differences are templated) |
 | `dot_gitconfig.tmpl`, `dot_fzfrc` | git (name/email from your answers), fzf |
 | `dot_config/starship.toml` | [starship](https://starship.rs) prompt |
 | `dot_config/ghostty/config.ghostty` | [Ghostty](https://ghostty.org) terminal (not on servers) |

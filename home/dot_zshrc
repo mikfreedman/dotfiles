@@ -58,7 +58,6 @@ if (( $+commands[fzf] )); then
   unset fzf_init f
 fi
 
-export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'
 
 # atuin: Ctrl-R searches history in a full-screen picker (overrides fzf's Ctrl-R).

@@ -3,7 +3,7 @@
 packages:
   darwin:
     # Installed everywhere (including --server style machines)
-    brew_common: [git, vim, ripgrep, fd, fzf]
+    brew_common: [chezmoi, git, vim, ripgrep, fd, fzf]
     brew: [go, zsh, direnv, yarn, wget, tree, tmux, tcptraceroute, jq, bat, git-delta, claude, neovim, tree-sitter-cli, docker/tap/sbx]
     casks: [firefox, google-chrome, bitwarden, bartender, veracrypt, spotify, zoom, vmware-horizon-client, neovide-app, docker-desktop, hammerspoon, alfred, flycut, rectangle, iterm2, visual-studio-code, font-blex-mono-nerd-font]
   linux:

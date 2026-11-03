@@ -4,6 +4,16 @@ Managed with [chezmoi](https://www.chezmoi.io). The source tree is `home/` (see 
 
 ## Install
 
+macOS:
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install chezmoi
+chezmoi init --apply git@github.com:mikfreedman/dotfiles.git
+```
+
+Linux (apt-based; the setup scripts use apt, so Homebrew isn't needed):
+
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:mikfreedman/dotfiles.git
 ```

@@ -28,15 +28,17 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'ssh' \
   'completion' \
+{{- if eq .chezmoi.os "darwin" }}
   'homebrew' \
   'osx' \
+{{- end }}
   'git' \
   'tmux' \
   'syntax-highlighting' \
   'history-substring-search' \
   'prompt' \
-  'prompt'\
   'zsh-z'
+
 #
 # Autosuggestions
 #
@@ -159,10 +161,10 @@ zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-# zstyle ':prezto:module:tmux:auto-start' local 'yes'
+{{ if eq .chezmoi.os "darwin" }}# {{ end }}zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
- zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
 zstyle ':prezto:module:tmux:iterm' integrate 'yes'

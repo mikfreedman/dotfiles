@@ -165,6 +165,12 @@ if [ -x fzf ]; then
   eval "$(fzf --zsh)"
 fi
 
+# Use Neovim as vim when it's installed (servers without it keep plain Vim)
+if command -v nvim >/dev/null; then
+  alias vim=nvim vi=nvim vimdiff='nvim -d'
+  export EDITOR=nvim VISUAL=nvim
+fi
+
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
 fi

@@ -1,0 +1,39 @@
+# dotfiles
+
+Managed with [chezmoi](https://www.chezmoi.io). The source tree is `home/` (see `.chezmoiroot`).
+
+## Install
+
+```sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:mikfreedman/dotfiles.git
+```
+
+You're asked three questions once per machine: git name, git email, and whether this is a
+**server** (Vim only: no Neovim, GUI apps, delta or Neovim/Neovide config). After that,
+`chezmoi apply` brings a machine up to date and is safe to re-run.
+
+## What's in it
+
+| Source | Result |
+|---|---|
+| `dot_zshrc`, `dot_zprofile.tmpl`, `dot_zshenv`, `dot_zlogin`, `dot_zlogout`, `dot_zpreztorc.tmpl` | zsh + [Prezto](https://github.com/sorin-ionescu/prezto) (macOS/Linux differences are templated) |
+| `dot_gitconfig.tmpl`, `dot_fzfrc` | git (name/email from your answers), fzf |
+| `dot_vimrc`, `dot_gvimrc`, `dot_vim/`, `dot_config/nvim/` | Vim and Neovim, see [docs/vim.md](docs/vim.md) |
+| `.chezmoiexternal.toml.tmpl` | Prezto, zsh-z, and the Vim plugins (pinned to commits) |
+| `.chezmoidata/packages.yaml` | brew/apt package lists and pinned Linux tool versions |
+| `run_*` scripts | install packages (Homebrew/apt), Neovim + tree-sitter + Nerd Font on Linux, Vim helptags, Neovim plugins, login shell |
+
+The `run_onchange_*` scripts re-run only when the package lists, pinned versions, plugin pins
+or `lazy-lock.json` change.
+
+## Everyday
+
+```sh
+chezmoi edit ~/.zshrc      # edit the source copy
+chezmoi diff               # preview
+chezmoi apply              # apply
+chezmoi cd                 # shell in the source dir
+scripts/update-vim-pins    # bump Vim plugin pins to upstream HEAD
+```
+
+Machine-local zsh settings go in `~/.zshrc.local`.

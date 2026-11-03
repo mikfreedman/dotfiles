@@ -1,0 +1,17 @@
+# Package lists used by the run_onchange_before_10-packages-* scripts.
+# Editing a list re-runs the matching script on the next `chezmoi apply`.
+packages:
+  darwin:
+    # Installed everywhere (including --server style machines)
+    brew_common: [git, vim, ripgrep, fd, fzf]
+    brew: [go, zsh, direnv, yarn, wget, tree, tmux, tcptraceroute, jq, bat, git-delta, claude, neovim, tree-sitter-cli, docker/tap/sbx]
+    casks: [firefox, google-chrome, bitwarden, bartender, veracrypt, spotify, zoom, vmware-horizon-client, neovide-app, docker-desktop, hammerspoon, alfred, flycut, rectangle, iterm2, visual-studio-code, font-blex-mono-nerd-font]
+  linux:
+    apt_common: [git, curl, vim, ripgrep, fd-find, fzf, build-essential, unzip, xz-utils]
+    apt: [tmux, zsh, silversearcher-ag, net-tools, unattended-upgrades, software-properties-common, direnv, jq, bat]
+
+# Pinned versions for Linux installs (macOS uses whatever Homebrew has)
+versions:
+  nvim: v0.12.6
+  tree_sitter: v0.27.1
+  nerd_fonts: v3.5.1

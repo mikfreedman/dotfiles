@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+zsh=$(command -v zsh || true)
+[[ -n "$zsh" ]] || exit 0
+[[ "${SHELL:-}" == "$zsh" ]] && exit 0
+log "Setting login shell to $zsh"
+chsh -s "$zsh" || log "chsh failed; run: chsh -s $zsh"

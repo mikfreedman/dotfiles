@@ -1,0 +1,11 @@
+{{ if not .server -}}
+#!/usr/bin/env bash
+set -euo pipefail
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+# lazy-lock.json hash: {{ include "dot_config/nvim/lazy-lock.json" | sha256sum }}
+export PATH="$HOME/.local/bin:$PATH"
+command -v nvim >/dev/null || { log "Neovim not found; skipping plugin install"; exit 0; }
+log "Installing Neovim plugins from lazy-lock.json"
+nvim --headless '+Lazy! restore' +qa
+{{ end -}}

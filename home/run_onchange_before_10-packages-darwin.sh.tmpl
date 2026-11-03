@@ -1,0 +1,17 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+# packages.yaml hash: {{ .packages.darwin | toJson | sha256sum }}
+command -v brew >/dev/null || { echo "Install Homebrew first: https://brew.sh" >&2; exit 1; }
+log "Installing packages with Homebrew"
+{{ if .packages.darwin.brew_common -}}
+brew install {{ .packages.darwin.brew_common | join " " }}
+{{ end -}}
+{{ if not .server -}}
+brew trust docker/tap
+brew install {{ .packages.darwin.brew | join " " }}
+brew install --cask {{ .packages.darwin.casks | join " " }}
+{{ end -}}
+{{ end -}}

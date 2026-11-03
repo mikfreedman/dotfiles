@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+# vim_plugins hash: {{ .vim_plugins | toJson | sha256sum }}
+command -v vim >/dev/null || exit 0
+vim -u NONE -i NONE -es -c 'silent! helptags ALL' -c 'qa!' || true

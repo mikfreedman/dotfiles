@@ -1,0 +1,23 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+# packages.yaml hash: {{ .packages.linux | toJson | sha256sum }}
+command -v apt-get >/dev/null || { echo "Only apt-based distros are supported; install the packages in .chezmoidata/packages.yaml yourself" >&2; exit 1; }
+log "Installing packages with apt"
+sudo apt-get update -qq
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq {{ .packages.linux.apt_common | join " " }}
+{{- if not .server }}
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq {{ .packages.linux.apt | join " " }}
+{{- end }}
+
+mkdir -p "$HOME/.local/bin" "$HOME/go"
+# Debian/Ubuntu rename these binaries
+if command -v fdfind >/dev/null && ! command -v fd >/dev/null; then
+  ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+if command -v batcat >/dev/null && ! command -v bat >/dev/null; then
+  ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+fi
+{{ end -}}

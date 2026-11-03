@@ -1,4 +1,5 @@
 {{ if .server }}
 .config/nvim
 .gvimrc
+.config/ghostty
 {{ end }}

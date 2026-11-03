@@ -56,7 +56,8 @@ installed, so servers keep plain Vim. Type `command vim` or `\vim` to get the re
 
 ### Terminal font
 
-Set your terminal font to **BlexMono Nerd Font**. Over SSH it's your *local*
+Ghostty is already set to **BlexMono Nerd Font** (`~/.config/ghostty/config.ghostty`); set any
+other terminal to it yourself. Over SSH it's your *local*
 terminal that draws the glyphs, so icons work on servers too. If you're on a terminal without
 a Nerd Font, `export NVIM_NO_NERD_FONT=1`.
 

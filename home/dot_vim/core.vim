@@ -182,7 +182,7 @@ nnoremap du :diffupdate<CR>
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>echo<CR>
 
-" Map Cmd-S to <F12> in iTerm2 etc. for Save.
+" F12 saves (terminals can be set to send F12 for Cmd-S).
 nnoremap <F12> :w<CR>
 inoremap <F12> <C-o>:w<CR>
 

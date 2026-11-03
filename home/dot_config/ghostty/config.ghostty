@@ -1,0 +1,12 @@
+# Ghostty (https://ghostty.org/docs/config/reference). `ghostty +show-config --default --docs` lists every option.
+
+font-family = BlexMono Nerd Font
+font-size = 16
+
+# Left Option acts as Alt (fzf's Alt-C, Alt-B/F word moves); right Option still types ∫, é, ...
+macos-option-as-alt = left
+
+# ssh-terminfo copies Ghostty's terminfo to hosts you ssh into, and ssh-env falls back to
+# TERM=xterm-256color where it can't, so remote vim/tmux/less work.
+# no-title: Prezto's terminal module already sets window and tab titles.
+shell-integration-features = ssh-terminfo,ssh-env,no-title

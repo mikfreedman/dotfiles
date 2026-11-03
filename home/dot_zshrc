@@ -2,13 +2,6 @@
 # Executes commands at the start of an interactive session.
 #
 
-if [[ -f "$HOME/.iterm2/it2check" ]]; then
-	$HOME/.iterm2/it2check
-	if [ $? -eq 0 ]; then
-		export TERM_PROGRAM='iTerm.app'
-	fi
-fi
-
 # Source Prezto. It sets the Emacs keymap, up/down history-substring search, and
 # the AUTO_CD/AUTO_PUSHD/MULTIOS/NO_CLOBBER/NO_FLOW_CONTROL/NO_HUP family of options.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -49,7 +42,6 @@ bindkey '\e[4~' end-of-line
 # F1 shows help for the command being typed
 bindkey "\eOP" run-help
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 eval "$(direnv hook zsh)"
 
 # fzf: Ctrl-T files, Alt-C cd, ** completion. `fzf --zsh` needs fzf 0.48+;

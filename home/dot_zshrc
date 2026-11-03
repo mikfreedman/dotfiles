@@ -88,6 +88,11 @@ fi
 export GOPRIVATE=*.eng.vmware.com
 alias cat='bat'
 
+# zoxide: `z foo` jumps to the most-used dir matching foo, `zi` picks with fzf
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
+
 # Use Neovim as vim when it's installed (servers without it keep plain Vim).
 # EDITOR/VISUAL are set in .zprofile.
 if (( $+commands[nvim] )); then

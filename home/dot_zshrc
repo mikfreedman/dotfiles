@@ -39,10 +39,17 @@ setopt RM_STAR_SILENT     # Don't ask before rm *
 bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
 
+# Up/down search history for what's typed so far. Prezto binds these for keypad
+# mode (^[OA); these cover terminals and tmux setups that send ^[[A instead.
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
 # F1 shows help for the command being typed
 bindkey "\eOP" run-help
 
-eval "$(direnv hook zsh)"
+if (( $+commands[direnv] )); then
+  eval "$(direnv hook zsh)"
+fi
 
 # fzf: Ctrl-T files, Alt-C cd, ** completion. `fzf --zsh` needs fzf 0.48+;
 # older distro packages ship the same scripts under /usr/share/doc.
@@ -58,7 +65,9 @@ if (( $+commands[fzf] )); then
   unset fzf_init f
 fi
 
-alias cat='bat'
+if (( $+commands[bat] )); then
+  alias cat='bat'
+fi
 
 # atuin: Ctrl-R searches history in a full-screen picker (overrides fzf's Ctrl-R).
 # Up/down stay on Prezto's history-substring-search; `?` stays a normal key.

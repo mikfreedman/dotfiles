@@ -6,6 +6,8 @@ log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 # packages.yaml hash: {{ .packages.darwin | toJson | sha256sum }}
 command -v brew >/dev/null || { echo "Install Homebrew first: https://brew.sh" >&2; exit 1; }
 log "Installing packages with Homebrew"
+# Skip brew's "Do you want to proceed with the installation?" confirmation
+export HOMEBREW_NO_ASK=1
 {{ if .packages.darwin.brew_common -}}
 brew install {{ .packages.darwin.brew_common | join " " }}
 {{ end -}}

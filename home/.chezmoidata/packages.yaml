@@ -3,15 +3,18 @@
 packages:
   darwin:
     # Installed everywhere (including --server style machines)
-    brew_common: [chezmoi, git, vim, ripgrep, fd, fzf]
+    brew_common: [chezmoi, git, vim, ripgrep, fd, fzf, mise]
     brew: [go, node, zsh, direnv, yarn, wget, tree, tmux, tcptraceroute, jq, bat, git-delta, claude, neovim, tree-sitter-cli, docker/tap/sbx]
     casks: [firefox, google-chrome, bitwarden, bartender, veracrypt, spotify, zoom, neovide-app, docker-desktop, hammerspoon, alfred, flycut, rectangle, caffeine, git-credential-manager, iterm2, visual-studio-code, font-blex-mono-nerd-font]
   linux:
     apt_common: [git, curl, vim, ripgrep, fd-find, fzf, build-essential, unzip, xz-utils]
     apt: [tmux, zsh, silversearcher-ag, net-tools, unattended-upgrades, software-properties-common, direnv, jq, bat]
+    # Installed everywhere with mise (`mise use -g`), since apt's versions are old or missing
+    mise: []
 
 # Pinned versions for Linux installs (macOS uses whatever Homebrew has)
 versions:
+  mise: v2026.11.0
   nvim: v0.12.6
   tree_sitter: v0.27.1
   nerd_fonts: v3.5.1

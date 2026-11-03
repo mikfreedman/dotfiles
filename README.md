@@ -34,7 +34,7 @@ you already have instead, run `chezmoi init --apply --source <path-to-checkout>`
 | `dot_vimrc`, `dot_gvimrc`, `dot_vim/`, `dot_config/nvim/` | Vim and Neovim, see [docs/vim.md](docs/vim.md) |
 | `.chezmoiexternal.toml.tmpl` | Prezto, zsh-z, and the Vim plugins (pinned to commits) |
 | `.chezmoidata/packages.yaml` | brew/apt package lists and pinned Linux tool versions |
-| `run_*` scripts | install packages (Homebrew/apt), Neovim + tree-sitter + Nerd Font on Linux, Vim helptags, Neovim plugins, login shell |
+| `run_*` scripts | install packages (Homebrew/apt), mise + Neovim + tree-sitter + Nerd Font on Linux, Vim helptags, Neovim plugins, login shell |
 
 The `run_onchange_*` scripts re-run only when the package lists, pinned versions, plugin pins
 or `lazy-lock.json` change.

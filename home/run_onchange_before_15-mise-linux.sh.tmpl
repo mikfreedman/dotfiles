@@ -1,0 +1,31 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+
+# mise is a pinned release in ~/.local (Debian/Ubuntu don't package it). It then installs
+# the CLI tools in packages.linux.mise, which apt has only in old versions or not at all.
+# mise tools: {{ .packages.linux.mise | toJson }}
+MISE_VERSION={{ .versions.mise }}
+LOCAL_BIN="$HOME/.local/bin"
+mkdir -p "$LOCAL_BIN" "$HOME/.local/opt"
+
+case "$(uname -m)" in
+  x86_64) arch=x64 ;;
+  aarch64|arm64) arch=arm64 ;;
+  *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+
+if [[ "$("$LOCAL_BIN/mise" --version 2>/dev/null)" != "${MISE_VERSION#v} "* ]]; then
+  log "Installing mise $MISE_VERSION to ~/.local/opt"
+  rm -rf "$HOME/.local/opt/mise"
+  curl -fsSL "https://github.com/jdx/mise/releases/download/$MISE_VERSION/mise-$MISE_VERSION-linux-$arch.tar.gz" \
+    | tar xz -C "$HOME/.local/opt"
+  ln -sf "$HOME/.local/opt/mise/bin/mise" "$LOCAL_BIN/mise"
+fi
+{{- if .packages.linux.mise }}
+
+log "Installing {{ .packages.linux.mise | join ", " }} with mise"
+"$LOCAL_BIN/mise" use --global --yes {{ .packages.linux.mise | join " " }}
+{{- end }}
+{{ end -}}

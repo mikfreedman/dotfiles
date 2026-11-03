@@ -22,8 +22,10 @@ alias tma='tmux attach -d -t'
 alias tmn='tmux new -s $(basename $(pwd))'
 alias tml='tmux list-sessions'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# mise: per-project tool versions (Node, Go, ...) from mise.toml / .tool-versions
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+fi
 
 #
 # Options on top of Prezto's
@@ -67,7 +69,6 @@ SPACESHIP_DIR_TRUNC="0"
 SPACESHIP_DIR_TRUNC_REPO="false"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(direnv hook zsh)"
 
 # fzf: Ctrl-T files, Alt-C cd, ** completion. `fzf --zsh` needs fzf 0.48+;

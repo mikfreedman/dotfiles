@@ -24,8 +24,8 @@ no GUI config). On Linux, Neovim and the tree-sitter CLI are pinned releases in 
 
 Language servers come from [mason](https://github.com/mason-org/mason.nvim), which needs
 `node`/`npm` (TypeScript, ESLint, YAML, JSON, Bash, prettier) and `go` (gopls, goimports).
-On macOS both come from Homebrew; on Linux install them yourself (the distro `nodejs` is
-usually too old). `rustfmt` comes from `rustup`.
+On macOS both come from Homebrew. On Linux the distro `nodejs` is usually too old, so use
+mise, which chezmoi installs: `mise use -g node@lts go@latest`. `rustfmt` comes from `rustup`.
 
 The first time you open `nvim` it installs the Tree-sitter parsers and language servers in
 the background; give it a minute, then run `:checkhealth`.

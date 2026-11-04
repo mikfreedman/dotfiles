@@ -48,7 +48,7 @@ chezmoi edit ~/.zshrc      # edit the source copy
 chezmoi diff               # preview
 chezmoi apply              # apply
 chezmoi cd                 # shell in the source dir
-scripts/update-vim-pins    # bump Vim plugin pins to upstream HEAD
+scripts/update-plugin-pins # bump Vim and zsh plugin pins to upstream HEAD
 ```
 
 Machine-local zsh settings go in `~/.zshrc.local`.

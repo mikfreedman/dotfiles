@@ -5,6 +5,13 @@
   url = "https://github.com/{{ .repo }}/archive/{{ .commit }}.tar.gz"
   stripComponents = 1
 {{ end }}
+{{- /* zsh plugins, pinned to the commits in .chezmoidata/zsh_plugins.yaml */ -}}
+{{ range .zsh_plugins }}
+[".local/share/zsh/plugins/{{ .name }}"]
+  type = "archive"
+  url = "https://github.com/{{ .repo }}/archive/{{ .commit }}.tar.gz"
+  stripComponents = 1
+{{ end }}
 [".zprezto"]
   type = "git-repo"
   url = "https://github.com/sorin-ionescu/prezto.git"

@@ -67,7 +67,7 @@ Neovide and MacVim pick the font up from `~/.config/nvim/lua/config/neovide.lua`
 
 - **Neovim plugins:** `:Lazy update`, try it, then `chezmoi re-add ~/.config/nvim/lazy-lock.json`
   and commit. On another machine `chezmoi apply` runs `:Lazy restore` when the lockfile changes.
-- **Vim plugins:** `scripts/update-vim-pins`, review the diff, commit, `chezmoi apply`.
+- **Vim plugins:** `scripts/update-plugin-pins`, review the diff, commit, `chezmoi apply`.
 - **Language servers/formatters:** `:Mason`.
 
 Machine-local overrides go in `~/.vimrc.local`, `~/.gvimrc.local` or `~/.config/nvim-local.lua`.

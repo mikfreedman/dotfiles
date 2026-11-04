@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Bump every Vim and zsh plugin in home/.chezmoidata/{vim,zsh}_plugins.yaml to its upstream HEAD.
+# Review with `git diff`, commit, then `chezmoi apply`.
+set -euo pipefail
+data="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/home/.chezmoidata"
+for file in "$data/vim_plugins.yaml" "$data/zsh_plugins.yaml"; do
+  tmp="$(mktemp)"
+  while IFS= read -r line; do
+    if [[ "$line" =~ repo:\ ([^,]+), ]]; then
+      repo="${BASH_REMATCH[1]}"
+      commit="$(git ls-remote "https://github.com/$repo" HEAD | cut -f1)"
+      line="$(sed -E "s/commit: [0-9a-f]+/commit: $commit/" <<<"$line")"
+    fi
+    echo "$line"
+  done <"$file" >"$tmp"
+  mv "$tmp" "$file"
+  echo "Updated $file"
+done
+echo "Review with git diff"

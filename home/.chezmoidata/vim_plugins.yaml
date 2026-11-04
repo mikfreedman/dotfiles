@@ -1,5 +1,5 @@
 # Vim plugins (Vim only - Neovim uses lazy.nvim and dot_config/nvim/lazy-lock.json).
-# Installed as pinned archives by .chezmoiexternal.toml.tmpl. Bump with scripts/update-vim-pins.
+# Installed as pinned archives by .chezmoiexternal.toml.tmpl. Bump with scripts/update-plugin-pins.
 vim_plugins:
   - {name: tinted-vim, repo: tinted-theming/tinted-vim, commit: b7201d490772993a8baaa53736ab091b0abe998b}
   - {name: vim-surround, repo: tpope/vim-surround, commit: 3d188ed2113431cf8dac77be61b842acb64433d9}

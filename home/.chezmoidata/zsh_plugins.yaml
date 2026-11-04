@@ -1,0 +1,5 @@
+# zsh plugins, installed as pinned archives in ~/.local/share/zsh/plugins by
+# .chezmoiexternal.toml.tmpl and sourced by .zshrc. Bump with scripts/update-plugin-pins.
+zsh_plugins:
+  - {name: zsh-syntax-highlighting, repo: zsh-users/zsh-syntax-highlighting, commit: e6683f20e5c38d3e5447f45845d04ddda75d0f23}
+  - {name: zsh-history-substring-search, repo: zsh-users/zsh-history-substring-search, commit: a0bdb0d47dbaba31dba2db7af8c48a5d9c74049a}

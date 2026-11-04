@@ -68,3 +68,14 @@ For example, credential settings for private git hosts go in `~/.gitconfig.local
 [credential "https://git.example.com"]
 	provider = generic
 ```
+
+To skip Homebrew formulae or casks on one machine, for example ones that work installs
+through its own tooling, list them under `[data]` in `~/.config/chezmoi/chezmoi.toml`. Use
+the names as written in `home/.chezmoidata/packages.yaml`, then run `chezmoi apply`:
+
+```toml
+[data]
+  brew_skip = ["zoom", "google-chrome", "claude"]
+```
+
+The list is kept when `chezmoi init` re-runs. Skipping a package doesn't uninstall it.

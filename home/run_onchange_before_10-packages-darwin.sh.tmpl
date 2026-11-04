@@ -4,23 +4,44 @@ set -euo pipefail
 log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33mWarning:\033[0m %s\n' "$*" >&2; }
 
-# packages.yaml hash: {{ .packages.darwin | toJson | sha256sum }}
+{{- /* Drop the packages listed in brew_skip (in ~/.config/chezmoi/chezmoi.toml) */ -}}
+{{- $skip := get . "brew_skip" | default list -}}
+{{- $pkgs := dict -}}
+{{- $needTap := false -}}
+{{- range $list := list "brew_common" "brew" "brew_optional" "casks" -}}
+{{-   $kept := list -}}
+{{-   range get $.packages.darwin $list | default list -}}
+{{-     if not (has . $skip) }}{{ $kept = append $kept . }}{{ end -}}
+{{-   end -}}
+{{-   $_ := set $pkgs $list $kept -}}
+{{- end }}
+# packages.yaml + brew_skip hash: {{ list .packages.darwin $skip | toJson | sha256sum }}
+{{- if $skip }}
+# Skipped on this machine (brew_skip): {{ $skip | join " " }}
+{{- end }}
 command -v brew >/dev/null || { echo "Install Homebrew first: https://brew.sh" >&2; exit 1; }
 log "Installing packages with Homebrew"
 # Skip brew's "Do you want to proceed with the installation?" confirmation
 export HOMEBREW_NO_ASK=1
-{{ if .packages.darwin.brew_common -}}
-brew install {{ .packages.darwin.brew_common | join " " }}
+{{ if $pkgs.brew_common -}}
+brew install {{ $pkgs.brew_common | join " " }}
 {{ end -}}
 {{ if not .server -}}
+{{ range $pkgs.brew -}}{{ if hasPrefix "docker/tap/" . }}{{ $needTap = true }}{{ end }}{{ end -}}
+{{ if $needTap -}}
 brew trust docker/tap
+{{ end -}}
 {{ range .packages.darwin.brew_remove -}}
 if brew list --formula {{ . }} &>/dev/null; then brew uninstall --formula {{ . }}; fi
 {{ end -}}
-brew install {{ .packages.darwin.brew | join " " }}
-{{ range .packages.darwin.brew_optional -}}
+{{ if $pkgs.brew -}}
+brew install {{ $pkgs.brew | join " " }}
+{{ end -}}
+{{ range $pkgs.brew_optional -}}
 brew install {{ . }} || warn "Skipped {{ . }}: brew install failed (blocked network?)"
 {{ end -}}
-brew install --cask {{ .packages.darwin.casks | join " " }}
+{{ if $pkgs.casks -}}
+brew install --cask {{ $pkgs.casks | join " " }}
+{{ end -}}
 {{ end -}}
 {{ end -}}

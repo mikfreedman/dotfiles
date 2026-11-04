@@ -1,0 +1,5 @@
+#!/bin/sh
+# Runs on every `chezmoi apply` so it always says what it applied, even when nothing changed
+src={{ .chezmoi.sourceDir | quote }}
+dirty=$(git -C "$src" status --porcelain 2>/dev/null | grep -q . && echo " (plus uncommitted changes)")
+echo "chezmoi: applied $(git -C "$src" log -1 --format='%h %s' 2>/dev/null)$dirty"

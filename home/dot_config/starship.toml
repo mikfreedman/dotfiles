@@ -1,5 +1,5 @@
 # Starship prompt (https://starship.rs/config/). Same layout as the old spaceship config:
-#   12:34:56 user ~/full/path at host on  main [!?] took 3s
+#   12:34:56 user ~/full/path at host  main [!?] took 3s
 #   ✦  1 ❯
 # Symbols come from the Nerd Font Symbols preset (`starship preset nerd-font-symbols`),
 # which needs a Nerd Font (BlexMono Nerd Font in Ghostty/Neovide/gvim).
@@ -37,6 +37,8 @@ format = "at [$hostname]($style) "
 ssh_symbol = " "
 
 [git_branch]
+# The icon replaces the "on"
+format = "[$symbol$branch(:$remote_branch)]($style) "
 symbol = " "
 
 [status]

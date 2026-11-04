@@ -3,6 +3,10 @@
 font-family = BlexMono Nerd Font
 font-size = 16
 
+# Selecting text copies it to the system clipboard (plain `true` only uses the selection
+# clipboard, which macOS doesn't have)
+copy-on-select = clipboard
+
 # Left Option acts as Alt (fzf's Alt-C, Alt-B/F word moves); right Option still types ∫, é, ...
 macos-option-as-alt = left
 

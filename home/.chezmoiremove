@@ -1,3 +1,6 @@
 # Files this repo used to manage; `chezmoi apply` deletes them.
 .zlogout
+.zprezto
 .zprezto-contrib
+.zpreztorc
+.cache/prezto

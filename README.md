@@ -29,12 +29,12 @@ you already have instead, run `chezmoi init --apply --source <path-to-checkout>`
 
 | Source | Result |
 |---|---|
-| `dot_zshrc`, `dot_zprofile`, `dot_zshenv`, `dot_zlogin`, `dot_zpreztorc.tmpl` | zsh + [Prezto](https://github.com/sorin-ionescu/prezto) (macOS/Linux differences are templated) |
+| `dot_zshrc`, `dot_zprofile`, `dot_zshenv`, `dot_zlogin` | zsh, no framework: plain options and completion plus [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) and [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) |
 | `dot_gitconfig.tmpl`, `dot_fzfrc` | git (name/email from your answers), fzf |
 | `dot_config/starship.toml` | [starship](https://starship.rs) prompt |
 | `dot_config/ghostty/config.ghostty` | [Ghostty](https://ghostty.org) terminal (not on servers) |
 | `dot_vimrc`, `dot_gvimrc`, `dot_vim/`, `dot_config/nvim/` | Vim and Neovim, see [docs/vim.md](docs/vim.md) |
-| `.chezmoiexternal.toml.tmpl` | Prezto and the Vim plugins (pinned to commits) |
+| `.chezmoiexternal.toml.tmpl`, `.chezmoidata/{vim,zsh}_plugins.yaml` | Vim and zsh plugins (pinned to commits) |
 | `.chezmoidata/packages.yaml` | brew/apt package lists and pinned Linux tool versions |
 | `run_*` scripts | install packages (Homebrew/apt), mise + Neovim + tree-sitter + Nerd Font on Linux, Vim helptags, Neovim plugins, login shell |
 

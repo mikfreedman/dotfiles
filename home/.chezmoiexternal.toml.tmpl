@@ -12,11 +12,3 @@
   url = "https://github.com/{{ .repo }}/archive/{{ .commit }}.tar.gz"
   stripComponents = 1
 {{ end }}
-[".zprezto"]
-  type = "git-repo"
-  url = "https://github.com/sorin-ionescu/prezto.git"
-  refreshPeriod = "168h"
-  [".zprezto".clone]
-    args = ["--recursive"]
-  [".zprezto".pull]
-    args = ["--recurse-submodules"]

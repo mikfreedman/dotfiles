@@ -2,11 +2,179 @@
 # Executes commands at the start of an interactive session.
 #
 
-# Source Prezto. It sets the Emacs keymap, up/down history-substring search, and
-# the AUTO_CD/AUTO_PUSHD/MULTIOS/NO_CLOBBER/NO_FLOW_CONTROL/NO_HUP family of options.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# tmux: attach to (or start) a session in SSH logins everywhere and in local terminals
+# on Linux. Runs first so the shell that gets replaced doesn't do the rest of the setup.
+if (( $+commands[tmux] )) && [[ -z $TMUX && -z $INSIDE_EMACS && -z $VIM \
+    && -z $VSCODE_RESOLVING_ENVIRONMENT && $TERM_PROGRAM != vscode \
+    && $TERMINAL_EMULATOR != JetBrains-JediTerm \
+    && ( -n $SSH_TTY || $OSTYPE != darwin* ) ]]; then
+  tmux has-session 2>/dev/null \
+    || tmux new-session -d -s main \; set-option -t main destroy-unattached off >/dev/null 2>&1
+  exec tmux attach-session -d
 fi
+
+# mise: per-project tool versions (Node, Go, ...) from mise.toml / .tool-versions
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+fi
+
+#
+# Options
+#
+
+# General
+setopt INTERACTIVE_COMMENTS # Allow # comments at the prompt
+setopt RC_QUOTES            # 'it''s' means it's inside single quotes
+setopt COMBINING_CHARS      # Show accents combined with their letter
+setopt NO_FLOW_CONTROL      # Free up Ctrl-S/Ctrl-Q
+setopt NO_BEEP              # No beeps on errors
+setopt CLOBBER              # Let > overwrite existing files
+setopt MULTIOS              # Allow several redirections, e.g. `cmd >a >b`
+
+# Jobs
+setopt LONG_LIST_JOBS       # List jobs in long format
+setopt AUTO_RESUME          # A bare command name resumes the matching stopped job
+setopt NOTIFY               # Report finished background jobs right away
+setopt NO_BG_NICE           # Don't lower the priority of background jobs
+setopt NO_HUP               # Don't kill background jobs when the shell exits
+setopt NO_CHECK_JOBS        # Don't warn about running jobs on exit
+
+# History (atuin keeps the searchable copy; this file feeds Up/Down)
+HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt EXTENDED_HISTORY     # Save timestamps and durations
+setopt SHARE_HISTORY        # Share history between running shells
+setopt HIST_IGNORE_ALL_DUPS # Drop the older copy when a command repeats
+setopt HIST_SAVE_NO_DUPS    # Don't write duplicates to the file
+setopt HIST_FIND_NO_DUPS    # Don't show duplicates when searching
+setopt HIST_IGNORE_SPACE    # Don't save commands that start with a space
+setopt HIST_VERIFY          # Show !! expansions before running them
+
+# Directories
+setopt AUTO_CD              # Type a directory name to cd into it
+setopt AUTO_PUSHD           # cd pushes the old directory onto the stack
+setopt PUSHD_IGNORE_DUPS    # Keep the stack free of duplicates
+setopt PUSHD_SILENT         # Don't print the stack after pushd/popd
+setopt PUSHD_TO_HOME        # Bare pushd goes home
+setopt PUSHD_MINUS          # cd -1 is the most recent dir, not the oldest
+setopt CDABLE_VARS          # cd foo tries $foo if there's no dir called foo
+setopt AUTO_NAME_DIRS       # Use named dirs (~foo) in prompts when possible
+alias -- -='cd -'
+alias d='dirs -v'           # Numbered directory stack; jump with 1..9
+for index ({1..9}) alias "$index"="cd +$index"; unset index
+
+# Globbing
+setopt NO_EXTENDED_GLOB     # Treat #, ~ and ^ literally
+setopt NO_CASE_GLOB         # Case-insensitive globbing
+setopt NUMERIC_GLOB_SORT    # Sort file2 before file10
+setopt NO_NOMATCH           # Pass unmatched globs through unchanged
+setopt RC_EXPAND_PARAM      # foo${arr}bar applies foo/bar to every element
+setopt RM_STAR_SILENT       # Don't ask before rm *
+
+#
+# Completion
+#
+
+setopt COMPLETE_IN_WORD     # Complete from the cursor, not just the end of the word
+setopt ALWAYS_TO_END        # Move the cursor to the end after completing
+setopt AUTO_MENU            # Second Tab opens the menu
+setopt AUTO_PARAM_SLASH     # Add / after completed directories
+setopt PATH_DIRS            # Complete commands in subdirectories of $PATH entries
+setopt GLOB_COMPLETE        # Complete globs as a menu instead of expanding them
+
+# Rebuild the completion dump at most once a day; otherwise load it without checks.
+# .zlogin compiles it in the background.
+autoload -Uz compinit
+() {
+  setopt LOCAL_OPTIONS EXTENDED_GLOB
+  local dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+  if [[ -n $dump(#qN.mh-20) ]]; then
+    compinit -C -d "$dump"
+  else
+    mkdir -p "${dump:h}"
+    compinit -i -d "$dump"
+    touch "$dump"
+  fi
+}
+
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' \
+  'r:|[._-]=* r:|=*' 'l:|=* r:|=*'               # Case-insensitive, then partial-word
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle -e ':completion:*:approximate:*' max-errors \
+  'reply=($(( ($#PREFIX + $#SUFFIX) / 3 > 7 ? 7 : ($#PREFIX + $#SUFFIX) / 3 )) numeric)'
+zstyle ':completion:*' menu select              # Arrow keys move through the menu
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:messages' format ' %F{magenta}-- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:options' description yes
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $LOGNAME -o pid,user,command -w'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:manuals' separate-sections true
+
+#
+# Line editing (Emacs keys)
+#
+
+bindkey -e
+WORDCHARS='*?_-.[]~&;!#$%^(){}<>'   # Alt-Backspace and Alt-B/F stop at / and =
+
+# Quote URLs as they're typed or pasted, so ? and & don't need escaping
+autoload -Uz bracketed-paste-url-magic url-quote-magic
+zle -N bracketed-paste bracketed-paste-url-magic
+zle -N self-insert url-quote-magic
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line    # Edit the command in $EDITOR
+
+bindkey ' ' magic-space             # Expand !! and friends on space
+bindkey '^Q' push-line-or-edit      # Stash the line, run another, get it back
+bindkey '^[[Z' reverse-menu-complete # Shift-Tab goes back in the menu
+bindkey '^[[3~' delete-char         # Delete
+bindkey '^[OP' run-help             # F1 shows help for the command being typed
+for key in '^[[H' '^[OH' '^[[1~'; bindkey $key beginning-of-line  # Home
+for key in '^[[F' '^[OF' '^[[4~'; bindkey $key end-of-line        # End
+for key in '^[[1;5D' '^[[1;3D' '^[^[[D'; bindkey $key backward-word # Ctrl/Alt-Left
+for key in '^[[1;5C' '^[[1;3C' '^[^[[C'; bindkey $key forward-word  # Ctrl/Alt-Right
+unset key
+
+#
+# Terminal titles: user@host: dir at the prompt, the command while it runs.
+# Skipped inside tmux, which sets its own.
+#
+
+if [[ $TERM != (dumb|linux) && -z $TMUX ]]; then
+  autoload -Uz add-zsh-hook
+  _title_precmd() {
+    print -Pn -- '\e]2;%n@%m: %~\a\e]1;%m: %15<...<%~%<<\a'
+  }
+  _title_preexec() {
+    # First word that isn't VAR=x, sudo, ssh or an option, without its path
+    setopt LOCAL_OPTIONS EXTENDED_GLOB
+    local cmd=${${2[(wr)^(*=*|sudo|ssh|-*)]}:t}
+    print -rPn -- $'\e]2;%n@%m: '"${cmd//\%/%%}"$'\a\e]1;%m: %15>...>'"${cmd//\%/%%}"$'%>>\a'
+  }
+  add-zsh-hook precmd _title_precmd
+  add-zsh-hook preexec _title_preexec
+fi
+
+#
+# Aliases
+#
 
 # OSX
 alias fixow='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user;killall Finder;echo "Open With has been rebuilt, Finder will relaunch"'
@@ -15,37 +183,35 @@ alias tma='tmux attach -d -t'
 alias tmn='tmux new -s $(basename $(pwd))'
 alias tml='tmux list-sessions'
 
-# mise: per-project tool versions (Node, Go, ...) from mise.toml / .tool-versions
-if (( $+commands[mise] )); then
-  eval "$(mise activate zsh)"
-fi
+# git: the common Prezto names (more git shortcuts live in ~/.gitconfig)
+alias g='git'
+alias gws='git status --short'
+alias gwS='git status'
+alias gwd='git diff'
+alias gia='git add'
+alias gc='git commit --verbose'
+alias gcm='git commit --message'
+alias gca='git commit --verbose --all'
+alias gcf='git commit --amend --reuse-message HEAD'
+alias gco='git checkout'
+alias gb='git branch'
+alias gbc='git checkout -b'
+alias gf='git fetch'
+alias gfr='git pull --rebase'
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gr='git rebase'
+alias gri='git rebase --interactive'
+alias grc='git rebase --continue'
+alias gra='git rebase --abort'
+alias gs='git stash'
+alias gsp='git stash pop'
+alias glo='git log --topo-order --oneline --decorate'
+alias glg='git log --topo-order --oneline --decorate --graph'
 
 #
-# Options on top of Prezto's
+# Tools
 #
-
-setopt AUTO_NAME_DIRS     # Use named dirs (~foo) in prompts when possible
-setopt GLOB_COMPLETE      # Complete globs as a menu instead of expanding them
-setopt PUSHD_MINUS        # cd -1 is the most recent dir, not the oldest
-setopt CLOBBER            # Let > overwrite existing files (Prezto turns this off)
-setopt NO_CASE_GLOB       # Case-insensitive globbing
-setopt NUMERIC_GLOB_SORT  # Sort file2 before file10
-setopt RC_EXPAND_PARAM    # foo${arr}bar applies foo/bar to every element
-setopt NO_EXTENDED_GLOB   # Treat #, ~ and ^ literally (Prezto turns this on)
-setopt NO_NOMATCH         # Pass unmatched globs through unchanged
-setopt RM_STAR_SILENT     # Don't ask before rm *
-
-# Home/End in terminals that send these sequences
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-
-# Up/down search history for what's typed so far. Prezto binds these for keypad
-# mode (^[OA); these cover terminals and tmux setups that send ^[[A instead.
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-# F1 shows help for the command being typed
-bindkey "\eOP" run-help
 
 if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
@@ -70,12 +236,12 @@ if (( $+commands[bat] )); then
 fi
 
 # atuin: Ctrl-R searches history in a full-screen picker (overrides fzf's Ctrl-R).
-# Up/down stay on Prezto's history-substring-search; `?` stays a normal key.
+# Up/down stay on history-substring-search; `?` stays a normal key.
 if (( $+commands[atuin] )); then
   eval "$(atuin init zsh --disable-up-arrow --disable-ai)"
 fi
 
-# eza for ls, with git status in long listings. Same alias names as Prezto's.
+# eza for ls, with git status in long listings
 if (( $+commands[eza] )); then
   if [[ -n "$NVIM_NO_NERD_FONT" ]]; then
     alias ls='eza --group-directories-first'
@@ -112,6 +278,26 @@ fi
 if (( $+commands[neovide] )); then
   alias mvim=neovide
 fi
+
+#
+# Plugins (pinned by chezmoi, see .chezmoidata/zsh_plugins.yaml). Syntax highlighting
+# has to load after every other widget, and history-substring-search after it.
+#
+
+_zsh_plugins="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+if [[ -r $_zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source "$_zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+if [[ -r $_zsh_plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]]; then
+  source "$_zsh_plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+  HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'   # Case-insensitive
+  # Up/Down (both the normal ^[[A and keypad ^[OA forms) and Ctrl-P/Ctrl-N search
+  # history for what's typed so far
+  for key in '^[[A' '^[OA' '^P'; bindkey $key history-substring-search-up
+  for key in '^[[B' '^[OB' '^N'; bindkey $key history-substring-search-down
+  unset key
+fi
+unset _zsh_plugins
 
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local

@@ -3,6 +3,9 @@
 {{- $email := promptStringOnce . "email" "Git email" "github@michael-freedman.com" -}}
 {{- $server := promptBoolOnce . "server" "Server (Vim only, no Neovim/GUI apps)" false -}}
 
+# Remember the checkout `chezmoi init --source <path>` was run from, so later commands use it
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
 [data]
   name = {{ $name | quote }}
   email = {{ $email | quote }}

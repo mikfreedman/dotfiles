@@ -51,4 +51,20 @@ chezmoi cd                 # shell in the source dir
 scripts/update-plugin-pins # bump Vim and zsh plugin pins to upstream HEAD
 ```
 
-Machine-local zsh settings go in `~/.zshrc.local`.
+## Machine-local settings
+
+These files are read if they exist and are never part of the repo, so they're the place
+for anything private or specific to one machine:
+
+| File | For |
+|---|---|
+| `~/.zshrc.local` | zsh settings |
+| `~/.gitconfig.local` | git settings, included at the end of `~/.gitconfig` so it can override it |
+| `~/.vimrc.local`, `~/.gvimrc.local`, `~/.config/nvim-local.lua` | Vim and Neovim settings |
+
+For example, credential settings for private git hosts go in `~/.gitconfig.local`:
+
+```ini
+[credential "https://git.example.com"]
+	provider = generic
+```

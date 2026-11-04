@@ -73,3 +73,7 @@
 	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager
 {{- end }}
+# Machine-specific settings that stay out of this repo, like credential blocks for
+# private hosts. Git skips the include when the file doesn't exist.
+[include]
+	path = ~/.gitconfig.local

@@ -2,6 +2,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33mWarning:\033[0m %s\n' "$*" >&2; }
 
 # packages.yaml hash: {{ .packages.darwin | toJson | sha256sum }}
 command -v brew >/dev/null || { echo "Install Homebrew first: https://brew.sh" >&2; exit 1; }
@@ -17,6 +18,9 @@ brew trust docker/tap
 if brew list --formula {{ . }} &>/dev/null; then brew uninstall --formula {{ . }}; fi
 {{ end -}}
 brew install {{ .packages.darwin.brew | join " " }}
+{{ range .packages.darwin.brew_optional -}}
+brew install {{ . }} || warn "Skipped {{ . }}: brew install failed (blocked network?)"
+{{ end -}}
 brew install --cask {{ .packages.darwin.casks | join " " }}
 {{ end -}}
 {{ end -}}

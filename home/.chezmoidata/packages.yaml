@@ -4,7 +4,10 @@ packages:
   darwin:
     # Installed everywhere (including --server style machines)
     brew_common: [chezmoi, git, vim, ripgrep, fd, fzf, mise, zoxide, starship, eza, atuin]
-    brew: [go, node, zsh, direnv, corepack, wget, tmux, tcptraceroute, jq, bat, git-delta, claude, neovim, tree-sitter-cli, docker/tap/sbx]
+    brew: [go, node, zsh, direnv, corepack, wget, tmux, tcptraceroute, jq, bat, git-delta, neovim, tree-sitter-cli, docker/tap/sbx]
+    # Installed one at a time; a failure (e.g. a network that blocks the download) warns
+    # instead of stopping the run
+    brew_optional: [claude]
     # Removed before installing: corepack provides yarn and conflicts with the yarn formula
     brew_remove: [yarn]
     casks: [firefox, google-chrome, bitwarden, jordanbaird-ice, veracrypt, spotify, zoom, neovide-app, docker-desktop, hammerspoon, sol, flycut, rectangle, caffeine, git-credential-manager, ghostty, visual-studio-code, font-blex-mono-nerd-font]

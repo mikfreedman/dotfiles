@@ -41,7 +41,6 @@ bindkey '\e[4~' end-of-line
 
 # Up/down search history for what's typed so far. Prezto binds these for keypad
 # mode (^[OA); these cover terminals and tmux setups that send ^[[A instead.
-# When atuin is installed it takes over Up (both forms) further down.
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
@@ -70,11 +69,10 @@ if (( $+commands[bat] )); then
   alias cat='bat'
 fi
 
-# atuin: Ctrl-R and Up open its full-screen history picker (overriding fzf's Ctrl-R and
-# the substring-search Up above). Up starts from what's typed so far; Down stays on
-# history-substring-search. `?` stays a normal key.
+# atuin: Ctrl-R searches history in a full-screen picker (overrides fzf's Ctrl-R).
+# Up/down stay on Prezto's history-substring-search; `?` stays a normal key.
 if (( $+commands[atuin] )); then
-  eval "$(atuin init zsh --disable-ai)"
+  eval "$(atuin init zsh --disable-up-arrow --disable-ai)"
 fi
 
 # eza for ls, with git status in long listings. Same alias names as Prezto's.

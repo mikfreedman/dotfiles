@@ -7,7 +7,7 @@ packages:
     brew: [go, node, zsh, direnv, corepack, wget, tmux, tcptraceroute, jq, bat, git-delta, claude, neovim, tree-sitter-cli, docker/tap/sbx]
     # Removed before installing: corepack provides yarn and conflicts with the yarn formula
     brew_remove: [yarn]
-    casks: [firefox, google-chrome, bitwarden, jordanbaird-ice, veracrypt, spotify, zoom, neovide-app, docker-desktop, hammerspoon, raycast, rectangle, caffeine, git-credential-manager, ghostty, visual-studio-code, font-blex-mono-nerd-font]
+    casks: [firefox, google-chrome, bitwarden, jordanbaird-ice, veracrypt, spotify, zoom, neovide-app, docker-desktop, hammerspoon, sol, flycut, rectangle, caffeine, git-credential-manager, ghostty, visual-studio-code, font-blex-mono-nerd-font]
   linux:
     apt_common: [git, curl, vim, ripgrep, fd-find, fzf, build-essential, unzip, xz-utils]
     apt: [tmux, zsh, net-tools, unattended-upgrades, software-properties-common, direnv, jq, bat]

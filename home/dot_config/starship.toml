@@ -1,49 +1,72 @@
-# Starship prompt (https://starship.rs/config/). Same layout as the old spaceship config:
-#   12:34:56 user ~/full/path at host  main [!?] took 3s
-#   ✦  1 ❯
+# Starship prompt (https://starship.rs/config/). One line, modelled on Prezto's old sorin theme:
+#   ~/p/dotfiles ❯❯❯                                       main ⬆ ✚ ✱ ◼
+# Over SSH it starts with user@host. The right side shows a failed exit status, then git.
 # Symbols come from the Nerd Font Symbols preset (`starship preset nerd-font-symbols`),
 # which needs a Nerd Font (BlexMono Nerd Font in Ghostty/Neovide/gvim).
 "$schema" = "https://starship.rs/config-schema.json"
 
+add_newline = false
+
 format = """
-$time\
 $username\
-$directory\
 $hostname\
-$git_branch\
-$git_state\
-$git_status\
-$cmd_duration\
-$line_break\
-$jobs\
-$status\
+$directory\
 $character"""
 
-[time]
-disabled = false
-format = "[$time]($style) "
+right_format = """
+$status\
+$git_branch\
+$git_state\
+$git_status"""
 
 [username]
-format = "[$user]($style) "
+format = "[$user](bright-red)"
 
-# Show the whole path, not just the last few dirs or the path from the repo root
+# SSH only (the default)
+[hostname]
+format = "[@](white)[$ssh_symbol$hostname](yellow) "
+ssh_symbol = " "
+
+# Every directory but the last cut to one letter: ~/p/dotfiles
 [directory]
-truncation_length = 0
+style = "blue"
+truncation_length = 1
+fish_style_pwd_dir_length = 1
 truncate_to_repo = false
 read_only = " 󰌾"
 
-[hostname]
-format = "at [$hostname]($style) "
-ssh_symbol = " "
-
-[git_branch]
-# The icon replaces the "on"
-format = "[$symbol$branch(:$remote_branch)]($style) "
-symbol = " "
+[character]
+success_symbol = "[❯](bold red)[❯](bold yellow)[❯](bold green)"
+error_symbol = "[❯](bold red)[❯](bold yellow)[❯](bold green)"
+vimcmd_symbol = "[❮](bold green)[❮](bold yellow)[❮](bold red)"
 
 [status]
 disabled = false
+format = "[$symbol]($style)"
 symbol = " "
+style = "red"
+
+[git_branch]
+format = " [$symbol$branch]($style)"
+symbol = " "
+style = "green"
+
+[git_state]
+format = "[ :](white)[$state]($style)"
+style = "bright-red"
+
+[git_status]
+format = "$ahead_behind$staged$deleted$modified$renamed$stashed$conflicted$untracked"
+ahead = "[ ⬆](bright-purple)"
+behind = "[ ⬇](bright-purple)"
+diverged = "[ ⬆⬇](bright-purple)"
+staged = "[ ✚](green)"
+deleted = "[ ✖](red)"
+modified = "[ ✱](blue)"
+renamed = "[ ➜](purple)"
+stashed = "[ ✭](cyan)"
+conflicted = "[ ═](yellow)"
+untracked = "[ ◼](white)"
 
 # --- Nerd Font Symbols preset: modules not in the format above, kept so they look right
 # --- if they're ever added

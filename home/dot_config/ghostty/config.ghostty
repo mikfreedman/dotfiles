@@ -14,3 +14,7 @@ macos-option-as-alt = left
 # TERM=xterm-256color where it can't, so remote vim/tmux/less work.
 # no-title: Prezto's terminal module already sets window and tab titles.
 shell-integration-features = ssh-terminfo,ssh-env,no-title
+
+# New splits open in the focused pane's directory (needs Ghostty 1.2+; relies on shell
+# integration reporting the cwd)
+split-inherit-working-directory = true

@@ -61,6 +61,7 @@ for anything private or specific to one machine:
 | `~/.zshrc.local` | zsh settings |
 | `~/.gitconfig.local` | git settings, included at the end of `~/.gitconfig` so it can override it |
 | `~/.vimrc.local`, `~/.gvimrc.local`, `~/.config/nvim-local.lua` | Vim and Neovim settings |
+| `~/.config/chezmoi/chezmoi.toml` | your answers to `chezmoi init` (git name, email, server) and `brew_skip` |
 
 For example, credential settings for private git hosts go in `~/.gitconfig.local`:
 

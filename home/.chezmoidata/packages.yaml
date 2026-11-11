@@ -3,8 +3,8 @@
 packages:
   darwin:
     # Installed everywhere (including --server style machines)
-    brew_common: [chezmoi, git, vim, ripgrep, fd, fzf, mise, zoxide, starship, eza, atuin]
-    brew: [go, node, zsh, direnv, corepack, wget, tmux, tcptraceroute, jq, bat, git-delta, neovim, tree-sitter-cli, docker/tap/sbx]
+    brew_common: [chezmoi, git, vim, tmux, ripgrep, fd, fzf, mise, zoxide, starship, eza, atuin]
+    brew: [go, node, zsh, direnv, corepack, wget, tcptraceroute, jq, bat, git-delta, neovim, tree-sitter-cli, docker/tap/sbx]
     # Installed one at a time; a failure (e.g. a network that blocks the download) warns
     # instead of stopping the run
     brew_optional: [claude]
@@ -12,8 +12,8 @@ packages:
     brew_remove: [yarn]
     casks: [firefox, google-chrome, bitwarden, jordanbaird-ice, veracrypt, spotify, zoom, neovide-app, docker-desktop, hammerspoon, sol, flycut, rectangle, caffeine, git-credential-manager, ghostty, visual-studio-code, font-blex-mono-nerd-font]
   linux:
-    apt_common: [git, curl, vim, ripgrep, fd-find, fzf, build-essential, unzip, xz-utils]
-    apt: [tmux, zsh, net-tools, unattended-upgrades, software-properties-common, direnv, jq, bat]
+    apt_common: [git, curl, tmux, vim, ripgrep, fd-find, fzf, build-essential, unzip, xz-utils]
+    apt: [zsh, net-tools, unattended-upgrades, software-properties-common, direnv, jq, bat]
     # Installed everywhere with mise (`mise use -g`), since apt's versions are old or missing
     mise: [zoxide, starship, eza, atuin]
 

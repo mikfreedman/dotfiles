@@ -33,6 +33,7 @@ you already have instead, run `chezmoi init --apply --source <path-to-checkout>`
 | `dot_gitconfig.tmpl`, `dot_fzfrc` | git (name/email from your answers), fzf |
 | `dot_config/starship.toml` | [starship](https://starship.rs) prompt |
 | `dot_config/ghostty/config.ghostty` | [Ghostty](https://ghostty.org) terminal (not on servers) |
+| `dot_config/tmux/tmux.conf` | [tmux](https://github.com/tmux/tmux) |
 | `dot_vimrc`, `dot_gvimrc`, `dot_vim/`, `dot_config/nvim/` | Vim and Neovim, see [docs/vim.md](docs/vim.md) |
 | `.chezmoiexternal.toml.tmpl`, `.chezmoidata/{vim,zsh}_plugins.yaml` | Vim and zsh plugins (pinned to commits) |
 | `.chezmoidata/packages.yaml` | brew/apt package lists and pinned Linux tool versions |
